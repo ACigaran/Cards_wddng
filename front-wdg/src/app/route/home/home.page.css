@@ -1,0 +1,125 @@
+*{
+    text-align: center;
+}
+html{
+    background-color: #fffff0;
+}
+
+.cursiva{
+    font-family: "Cedarville Cursive", cursive;
+    font-size: 6.5rem;
+}
+h1{
+     font-family: "Asset", serif;
+     font-size: 4rem;
+}
+.carta{
+    position:relative;
+    width:760px;
+    height:450px;
+    margin:auto;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:#f1ecd9;
+    cursor: pointer;
+}
+.carta:hover{
+    box-shadow: 0px 0px 25px 0px #b4a77e;
+    transition-duration: 500ms;
+}
+.sello{
+    width:120px;
+    height:120px;
+    border:none;
+    border-radius:50%;
+    background:#6F1D1B;
+    color:white;
+    font-size:40px;
+    z-index:2;
+    cursor: pointer;
+}
+
+.texto-circular{
+    position:absolute;
+    width:170px;
+    height:170px;
+}
+
+.texto-circular span{
+    position:absolute;
+
+    left:50%;
+    top:50%;
+
+    transform-origin:0 2px;
+
+    font-size:10px;
+    font-family:sans-serif;
+}
+.subtitulos{
+    font-family: "PT Serif", serif;
+    font-size: 2.6rem;
+}
+.separador{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:50px 0;
+}
+h2{
+    font-size: 4rem;
+}
+@media (max-width: 768px){
+
+    .cursiva{
+        font-size: 2rem;
+    }
+
+    h1{
+        font-size: 2.2rem;
+    }
+
+    .carta{
+        width: 90%;
+        max-width: 560px;
+        height: 250px;
+    }
+
+    .sello{
+        width: 90px;
+        height: 90px;
+        font-size: 30px;
+    }
+
+    .texto-circular{
+        width: 130px;
+        height: 130px;
+    }
+
+    .texto-circular span{
+        font-size: 8px;
+        transform-origin: 0 2px;
+    }
+
+    .subtitulos{
+        font-size: 1.2rem;
+    }
+
+    .separador{
+        margin: 35px 0;
+    }
+
+    .separador::before,
+    .separador::after{
+        width: 90px;
+    }
+
+    p{
+        padding: 0 20px;
+        line-height: 1.6;
+    }
+
+}

@@ -1,0 +1,33 @@
+<p class="cursiva">¡Nos casamos!</p>
+<h1>VALERIA</h1>
+<h1 class="cursiva">&</h1>
+<h1>AGUSTIN</h1>
+
+<div class="carta" routerLink="/about">
+
+    <button class="sello">
+        ❦
+    </button>
+
+    <div class="texto-circular">
+
+        @for (item of letras; track $index) {
+
+            <span
+                [style.transform]="'rotate(' + item.rotacion + 'deg) translate(90px) rotate(90deg)'">
+                {{item.letra}}
+            </span>
+
+        }
+
+    </div>
+
+</div>
+
+<p class="subtitulos">Reservamos 1 lugar para vos.</p>
+<p class="subtitulos">El comienzo de nuestro para siempre.</p>
+
+<div class="separador">
+    <span> ────  ● ✦ ●  ──── </span>
+</div>
+<h2>26 Sept 2026</h2>
