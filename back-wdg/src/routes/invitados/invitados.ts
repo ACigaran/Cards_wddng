@@ -1,0 +1,1 @@
+// metodos para todos los invitados en general 

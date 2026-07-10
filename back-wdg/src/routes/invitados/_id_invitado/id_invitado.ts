@@ -1,0 +1,1 @@
+// metodos para invitados en especifico
