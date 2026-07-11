@@ -15,5 +15,11 @@ fecha_confirmacion: Type.Optional(Type.String()),
 fecha_creacion: Type.String()
 })
 
+export const invitadoQuerySchema = Type.Optional(
+    Type.Object({
+        nombre: Type.Optional(Type.String({maxLength: 50})),
+        ciudad: Type.Optional(Type.String())
+}))
 
 export type Invitado = Static<typeof invitadoSchema>
+export type InvitadoQuery = Static<typeof invitadoQuerySchema>

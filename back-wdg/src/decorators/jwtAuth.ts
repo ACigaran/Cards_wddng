@@ -1,5 +1,6 @@
 import fastifyPlugin from "fastify-plugin";
 import type { FastifyReply, FastifyRequest } from "fastify";
+import fastifyJwt from '@fastify/jwt';
 
 export default fastifyPlugin(async function (fastify) {
     fastify.decorate("authenticate",
