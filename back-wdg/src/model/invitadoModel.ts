@@ -2,12 +2,16 @@ import { type Static ,Type } from '@fastify/type-provider-typebox';
 
 export const invitadoSchema = Type.Object({
 id_invitado: Type.Integer({minimum: 1}),
-nombre: Type.Boolean(),
-ciudad: Type.String({maxLength: 15}),
-estado: Type.String(),
-cant_personas: Type.String({maxLength:50}),
-detalle: Type.String(),
-fecha_confirmacion: Type.String(),
+nombre: Type.String(),
+ciudad: Type.Optional(Type.String()),
+estado: Type.Enum({
+    pendiente: 'pendiente',
+    confirmado: 'confirmado',
+    rechazado: 'rechazado',
+}),
+cant_personas: Type.Integer({minimum: 1}),
+detalle: Type.Optional(Type.String()),
+fecha_confirmacion: Type.Optional(Type.String()),
 fecha_creacion: Type.String()
 })
 

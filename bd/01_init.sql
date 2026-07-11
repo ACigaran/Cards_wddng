@@ -1,5 +1,30 @@
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
+CREATE TABLE usuarios(
+    id_usuario SERIAL PRIMARY KEY,
+
+    username VARCHAR(15) NOT NULL,
+
+    password_hash TEXT NOT NULL,
+
+    fecha_creacion TIMESTAMP NOT NULL DEFAULT NOW(),
+
+    CONSTRAINT uq_usuarios_username
+        UNIQUE(username)
+);
+
+INSERT INTO usuarios(
+    username,
+    password_hash
+)
+VALUES(
+    'admin',
+    crypt(
+        'boda',
+        gen_salt('bf')
+    )
+);
+
 CCREATE TABLE invitados(
     id_invitado SERIAL PRIMARY KEY,
 
@@ -30,3 +55,4 @@ CCREATE TABLE invitados(
     CONSTRAINT chk_cant_personas
         CHECK(cant_personas > 0)
 );
+
