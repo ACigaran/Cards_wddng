@@ -13,18 +13,6 @@ CREATE TABLE usuarios(
         UNIQUE(username)
 );
 
-INSERT INTO usuarios(
-    username,
-    password_hash
-)
-VALUES(
-    'admin',
-    crypt(
-        'boda',
-        gen_salt('bf')
-    )
-);
-
 CCREATE TABLE invitados(
     id_invitado SERIAL PRIMARY KEY,
 
