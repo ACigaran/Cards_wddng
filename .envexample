@@ -1,0 +1,27 @@
+# ------------------------
+# BACKEND
+# ------------------------
+
+BACK_PORT=
+FRONT_PORT=
+
+FASTIFY_SECRET=
+
+
+# ------------------------
+# DATABASE
+# ------------------------
+
+DB_HOST=
+DB_PORT=
+DB_NAME=
+DB_USER=
+DB_PASSWORD=
+
+
+# ------------------------
+# ADMIN
+# ------------------------
+
+ADMIN_USER=
+ADMIN_PASSWORD=

@@ -21,8 +21,16 @@ export default fp<FastifySwaggerOptions>(async (fastify) => {
             ],
             tags: [
                 {
+                    name: 'Auth',
+                    description: 'Authenticate end points.'
+                },
+                {
                     name: 'Invitados',
                     description: 'Invitados end points.'
+                },
+                {
+                    name: 'Invitado',
+                    description: 'Invitado end points.'
                 }
             ],
             components: {

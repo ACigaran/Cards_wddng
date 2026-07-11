@@ -1,0 +1,67 @@
+services:
+
+  postgres:
+    image: postgres:17
+    container_name: wedding_db
+
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_DB: wedding
+      POSTGRES_USER: wedding
+      POSTGRES_PASSWORD: wedding
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/01-init.sql
+      - ./db/cml.sql:/docker-entrypoint-initdb.d/02-dml.sql
+
+  backend:
+    build:
+      context: ./back-wdg
+
+    container_name: wedding_api
+
+    depends_on:
+      - postgres
+
+    ports:
+      - "6200:6200"
+
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: wedding
+      DB_USER: wedding
+      DB_PASSWORD: wedding
+      FASTIFY_SECRET: super_secret
+
+    volumes:
+      - ./back-wdg:/app
+      - /app/node_modules
+
+    command: npm run dev
+
+  frontend:
+    build:
+      context: ./front-wdg
+
+    container_name: wedding_front
+
+    depends_on:
+      - backend
+
+    ports:
+      - "4200:4200"
+
+    volumes:
+      - ./front-wdg:/app
+      - /app/node_modules
+
+    command: npm start
+
+volumes:
+  postgres_data:
