@@ -21,6 +21,7 @@ const invitadosByIdRoutes: FastifyPluginAsyncTypebox = async(server) => {
             summary: ["Modificar invitado"],
             tags: ["Invitado"],
             params: Type.Pick(invitadoSchema, ["id_invitado"]),
+            body: Type.Pick(invitadoSchema, ["nombre", "cant_personas", "detalle"]),
             response: {
                 204: Type.Null(),
             },

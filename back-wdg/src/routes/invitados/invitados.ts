@@ -22,7 +22,7 @@ const invitadosRoute: FastifyPluginAsyncTypebox = async(server) =>{
         schema: {
             summary:"Crear un invitado",
             tags: ["Invitados"],
-            body: Type.Omit(invitadoSchema, ["id_invitado"]),
+            body: Type.Pick(invitadoSchema, ["nombre", "ciudad", "cant_personas", "detalle"]),
             response: {
                 201: invitadoSchema,
             },

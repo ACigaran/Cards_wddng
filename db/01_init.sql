@@ -1,19 +1,6 @@
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
-CREATE TABLE usuarios(
-    id_usuario SERIAL PRIMARY KEY,
-
-    username VARCHAR(15) NOT NULL,
-
-    password_hash TEXT NOT NULL,
-
-    fecha_creacion TIMESTAMP NOT NULL DEFAULT NOW(),
-
-    CONSTRAINT uq_usuarios_username
-        UNIQUE(username)
-);
-
-CCREATE TABLE invitados(
+CREATE TABLE invitados(
     id_invitado SERIAL PRIMARY KEY,
 
     codigo UUID NOT NULL DEFAULT gen_random_uuid(),

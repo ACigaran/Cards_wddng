@@ -1,5 +1,6 @@
 import { BasePgRepository } from "../model/standar/baseRepository.ts";
 import type { Invitado, Confirmacion } from "../model/invitadoModel.ts";
+import { InvitadoQuery } from "../model/invitadoModel.ts";
 import type { Pool } from "pg";
 
 export class InvitadoDB extends BasePgRepository<Invitado> {
@@ -22,6 +23,31 @@ export class InvitadoDB extends BasePgRepository<Invitado> {
 
         return res.rows;
     }
+
+    async findAll(query: InvitadoQuery): Promise<Invitado[]> {
+
+    let sql = `
+        SELECT *
+        FROM invitados
+        WHERE 1 = 1
+    `;
+
+    const vars = [];
+
+    if(query.nombre){
+        vars.push(`%${query.nombre}%`);
+        sql += ` AND nombre ILIKE $${vars.length}`;
+    }
+
+    if(query.ciudad){
+        vars.push(query.ciudad);
+        sql += ` AND ciudad = $${vars.length}`;
+    }
+
+    const res = await this.pool.query<Invitado>(sql, vars);
+
+    return res.rows;
+}
 
     async getById(
         id: number
@@ -155,18 +181,14 @@ export class InvitadoDB extends BasePgRepository<Invitado> {
             UPDATE invitados
             SET
                 nombre = $1,
-                ciudad = $2,
-                estado = $3,
-                cant_personas = $4,
-                detalle = $5
-            WHERE id_invitado = $6
+                cant_personas = $2,
+                detalle = $3
+            WHERE id_invitado = $4
             RETURNING *;
         `;
 
         const vars = [
             data.nombre,
-            data.ciudad,
-            data.estado,
             data.cant_personas,
             data.detalle,
             id

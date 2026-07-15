@@ -11,43 +11,19 @@ export class UsuarioDB extends BasePgRepository<Usuario> {
 
   async getUserByCredentials(
     credenciales: Credencial
-): Promise<Usuario> {
+): Promise<Usuario | null> {
 
-    const query = `
-        SELECT
-            id_usuario,
-            username
-        FROM usuarios
-        WHERE username = $1
-        AND password_hash = crypt(
-            $2,
-            password_hash
-        );
-    `;
-
-    const vars = [
-        credenciales.username,
-        credenciales.password
-    ];
-
-    try {
-        const res = await this.pool.query<Usuario>(
-            query,
-            vars
-        );
-
-        if(res.rowCount === 0){
-            throw new Error(
-                'Credenciales incorrectas'
-            );
-        }
-
-        return res.rows[0]!;
+    if(
+        credenciales.username === process.env.ADMIN_USER &&
+        credenciales.password === process.env.ADMIN_PASSWORD
+    ){
+        return {
+            id_usuario: 1,
+            username: process.env.ADMIN_USER!
+        };
     }
-    catch(err){
-        console.error(err);
-        throw err;
-    }
+
+    return null;
 }
     
     async getAll(): Promise<Usuario[]> { throw new Error('No implementado') };

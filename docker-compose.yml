@@ -2,42 +2,35 @@ services:
 
   postgres:
     image: postgres:17
-    container_name: wedding_db
-
-    restart: unless-stopped
+    container_name: wedding_postgres
 
     environment:
-      POSTGRES_DB: wedding
-      POSTGRES_USER: wedding
-      POSTGRES_PASSWORD: wedding
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
 
     ports:
-      - "5432:5432"
+      - "5433:5432"
 
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./db/init.sql:/docker-entrypoint-initdb.d/01-init.sql
-      - ./db/cml.sql:/docker-entrypoint-initdb.d/02-dml.sql
+      - ./db:/docker-entrypoint-initdb.d
 
   backend:
     build:
       context: ./back-wdg
+      dockerfile: Dockerfile
 
-    container_name: wedding_api
+    container_name: wedding_backend
 
     depends_on:
       - postgres
 
-    ports:
-      - "6200:6200"
+    env_file:
+      - .env
 
-    environment:
-      DB_HOST: postgres
-      DB_PORT: 5432
-      DB_NAME: wedding
-      DB_USER: wedding
-      DB_PASSWORD: wedding
-      FASTIFY_SECRET: super_secret
+    ports:
+      - "${BACK_PORT}:${BACK_PORT}"
 
     volumes:
       - ./back-wdg:/app
@@ -48,14 +41,18 @@ services:
   frontend:
     build:
       context: ./front-wdg
+      dockerfile: Dockerfile
 
-    container_name: wedding_front
+    container_name: wedding_frontend
 
     depends_on:
       - backend
 
+    env_file:
+      - .env
+
     ports:
-      - "4200:4200"
+      - "${FRONT_PORT}:${FRONT_PORT}"
 
     volumes:
       - ./front-wdg:/app

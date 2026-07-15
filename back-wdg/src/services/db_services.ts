@@ -7,9 +7,8 @@ const pgConfig: PoolConfig = {
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
 
-    connectionTimeoutMillis: 0,
-    idleTimeoutMillis: 1000,
     max: 10,
+    idleTimeoutMillis: 1000,
 };
 
 export const myPool = new Pool(pgConfig)
