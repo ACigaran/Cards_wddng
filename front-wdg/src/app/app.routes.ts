@@ -11,6 +11,11 @@ export const routes: Routes = [
         title: 'About',
     },
 
+    {   path: 'invitacion/:codigo',
+        loadComponent: () => import('./route/invitacion/invitacion.page').then((m) => m.InvitacionPage),
+        title: 'invitacion',
+    },
+
     {   path: 'panel',
         loadComponent: () => import('./route/panel/panel.page').then((m) => m.PanelPage),
         title: 'Panel',

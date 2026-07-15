@@ -15,7 +15,7 @@ const front_port = Number(process.env.API_PORT) || 4200;
 const origin = `http://localhost:${front_port}`
 await server.register(cors, {
     origin: origin,
-    methods: ["GET", "POST", "PUT", "DELETE"]
+    methods: ["GET", "POST","PATCH", "PUT", "DELETE"]
 });
 
 await server.register(autoLoad, {
