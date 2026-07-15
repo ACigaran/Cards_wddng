@@ -1,5 +1,5 @@
 import { BasePgRepository } from "../model/standar/baseRepository.ts";
-import type { Invitado } from "../model/invitadoModel.ts";
+import type { Invitado, Confirmacion } from "../model/invitadoModel.ts";
 import type { Pool } from "pg";
 
 export class InvitadoDB extends BasePgRepository<Invitado> {
@@ -46,6 +46,67 @@ export class InvitadoDB extends BasePgRepository<Invitado> {
 
         return res.rows[0]!;
     }
+
+    async getByCode(
+    codigo: string
+    ): Promise<Invitado> {
+
+        const query = `
+            SELECT *
+            FROM invitados
+            WHERE codigo = $1;
+        `;
+
+        const res = await this.pool.query<Invitado>(
+            query,
+            [codigo]
+        );
+
+        if(res.rowCount === 0){
+            throw new Error(
+                'Invitación no encontrada'
+            );
+        }
+
+        return res.rows[0]!;
+    }
+
+    async confirmByCode(
+    codigo: string,
+    data: Confirmacion
+): Promise<Invitado> {
+
+    const query = `
+        UPDATE invitados
+        SET
+            estado = $1,
+            cant_personas = $2,
+            detalle = $3,
+            fecha_confirmacion = NOW()
+        WHERE codigo = $4
+        RETURNING *;
+    `;
+
+    const vars = [
+        data.estado,
+        data.cant_personas,
+        data.detalle,
+        codigo
+    ];
+
+    const res = await this.pool.query<Invitado>(
+        query,
+        vars
+    );
+
+    if(res.rowCount === 0){
+        throw new Error(
+            'Invitacion no encontrada'
+        );
+    }
+
+    return res.rows[0]!;
+}
 
     async create(
         data: Partial<Invitado>
