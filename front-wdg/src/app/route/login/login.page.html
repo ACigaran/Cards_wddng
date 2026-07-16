@@ -1,18 +1,19 @@
-<h1>Login</h1>
+<div class="login-card">
 
-<input
-  type="text"
-  placeholder="Usuario"
-  [(ngModel)]="username">
+    <h1>LOGIN</h1>
 
-<input
-  type="password"
-  placeholder="Contraseña"
-  [(ngModel)]="password">
+    <input
+      type="text"
+      placeholder="Usuario"
+      [(ngModel)]="username">
 
-<button
-  (click)="login()">
+    <input
+      type="password"
+      placeholder="Contraseña"
+      [(ngModel)]="password">
 
-  Ingresar
+    <button (click)="login()">
+        Ingresar
+    </button>
 
-</button>
+</div>

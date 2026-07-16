@@ -2,6 +2,7 @@ import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Invitados } from '../../services/invitados';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,6 +17,7 @@ import { FormsModule } from '@angular/forms';
 export class DashboardPage implements OnInit {
   private invitadosService = inject(Invitados);
   private cd = inject(ChangeDetectorRef);
+  private router = inject(Router);
 
   invitados: any[] = [];
 
@@ -31,6 +33,15 @@ idEditando: number | null = null;
   cant_personas: 1,
   detalle: ''
 };
+
+logout() {
+
+  localStorage.clear();
+
+  this.router.navigate(
+    ['/login']
+  );
+}
 
 editar(
   invitado: any
