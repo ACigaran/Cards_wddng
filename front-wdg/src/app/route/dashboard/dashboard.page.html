@@ -1,1 +1,176 @@
-<p>dashboard works!</p>
+<h1>Dashboard</h1>
+
+<div class="stats">
+    <p>Total: {{ total }}</p>
+    <p>Confirmados: {{ confirmados }}</p>
+    <p>Pendientes: {{ pendientes }}</p>
+    <p>Rechazados: {{ rechazados }}</p>
+</div>
+
+<select
+  [(ngModel)]="filtro">
+
+  <option value="">
+    Todos
+  </option>
+
+  <option value="pendiente">
+    Pendientes
+  </option>
+
+  <option value="confirmado">
+    Confirmados
+  </option>
+
+  <option value="rechazado">
+    Rechazados
+  </option>
+
+</select>
+<input
+  [(ngModel)]="busqueda"
+  placeholder="Buscar invitado">
+
+<table>
+
+    <thead>
+
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Estado</th>
+            <th>Lugares</th>
+            <th>Link</th>
+            <th>Acciones</th>
+        </tr>
+
+    </thead>
+
+    <tbody>
+        
+@for(
+  invitado of invitados
+    .filter(
+      x =>
+        (!filtro ||
+        x.estado === filtro)
+        &&
+        x.nombre
+          .toLowerCase()
+          .includes(
+            busqueda.toLowerCase()
+          )
+    );
+  track invitado.id_invitado
+){
+            <tr>
+
+                <td>
+                    {{ invitado.id_invitado }}
+                </td>
+
+                <td>
+                    {{ invitado.nombre }}
+                </td>
+
+                <td>
+                    {{ invitado.estado }}
+                </td>
+
+                <td>
+                    {{ invitado.cant_personas }}
+                </td>
+
+                <td>
+
+    <a
+      target="_blank"
+      [href]="
+        'http://localhost:4200/invitacion/'
+        + invitado.codigo">
+
+      Abrir invitación
+
+    </a>
+
+    <br>
+
+    <button
+      (click)="copiar(
+        invitado.codigo
+      )">
+
+      Copiar link
+
+    </button>
+
+</td>
+
+                <td>
+
+                    <button
+                    (click)="eliminar(
+                    invitado.id_invitado
+                    )">
+
+                    Eliminar
+
+                    </button>
+
+                    
+
+                </td>
+                <td>
+                    <button
+  (click)="editar(
+    invitado
+  )">
+
+  Editar
+
+</button>
+
+<button
+  (click)="guardar()">
+
+  {{ editando
+      ? 'Guardar cambios'
+      : 'Crear invitado' }}
+
+</button>
+                </td>
+            </tr>
+
+        }
+
+    </tbody>
+
+</table>
+
+
+
+<h2>Nuevo invitado</h2>
+
+<input
+  [(ngModel)]="nuevo.nombre"
+  placeholder="Nombre">
+
+<input
+  [(ngModel)]="nuevo.ciudad"
+  placeholder="Ciudad">
+
+<input
+  type="number"
+  [(ngModel)]="nuevo.cant_personas">
+
+<textarea
+  [(ngModel)]="nuevo.detalle">
+</textarea>
+
+<button
+  (click)="crear()">
+
+  Crear invitado
+
+</button>
+

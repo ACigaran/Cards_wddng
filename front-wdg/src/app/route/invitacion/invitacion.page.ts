@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { InvitacionService } from '../../services/invitacion-service';
 
@@ -12,6 +12,7 @@ import { InvitacionService } from '../../services/invitacion-service';
 export class InvitacionPage implements OnInit{
   private route = inject(ActivatedRoute);
   private invitacionService = inject(InvitacionService);
+  private cd = inject(ChangeDetectorRef);
 
   invitado: any;
 
@@ -31,6 +32,7 @@ export class InvitacionPage implements OnInit{
       .subscribe({
         next: (data) => {
           this.invitado = data;
+          this.cd.detectChanges();
         }
       });
   }
@@ -47,8 +49,12 @@ export class InvitacionPage implements OnInit{
             cant_personas: this.invitado.cant_personas,
             detalle: ''
         }
-    ).subscribe(() => {
-        this.invitado.estado = 'confirmado';
+    ).subscribe((data: any) => {
+        this.invitado = {
+          ...this.invitado,
+          estado: 'confirmado'
+        };
+        this.cd.detectChanges();
     });
   }
 
@@ -60,8 +66,12 @@ export class InvitacionPage implements OnInit{
             cant_personas: this.invitado.cant_personas,
             detalle: ''
         }
-    ).subscribe(() => {
-        this.invitado.estado = 'rechazado';
+    ).subscribe((data: any) => {
+        this.invitado = {
+          ...this.invitado,
+          estado: 'rechazado'
+        };
+        this.cd.detectChanges();
     });
   }
 
