@@ -1,12 +1,13 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../enviroments/enviroment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Invitados {
   private http = inject(HttpClient);
-  private api = 'http://localhost:6200/invitados';
+  private api = `${environment.apiUrl}/invitados`
 
   getAll() {
     const token = localStorage.getItem('token');

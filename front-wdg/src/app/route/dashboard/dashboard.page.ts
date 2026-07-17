@@ -18,6 +18,8 @@ export class DashboardPage implements OnInit {
   private invitadosService = inject(Invitados);
   private cd = inject(ChangeDetectorRef);
   private router = inject(Router);
+  baseUrl =
+  window.location.origin;
 
   invitados: any[] = [];
 
@@ -157,7 +159,7 @@ get rechazados() {
 copiar(codigo: string) {
 
   const url =
-    `http://localhost:4200/invitacion/${codigo}`;
+    `${window.location.origin}/invitacion/${codigo}`;
 
   navigator.clipboard.writeText(
     url

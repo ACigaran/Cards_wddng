@@ -9,9 +9,6 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
 
-    ports:
-      - "5433:5432"
-
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./db:/docker-entrypoint-initdb.d
@@ -28,15 +25,15 @@ services:
 
     env_file:
       - .env
-
-    ports:
-      - "${BACK_PORT}:${BACK_PORT}"
+      
+    expose:
+      - "${BACK_PORT}"
 
     volumes:
       - ./back-wdg:/app
       - /app/node_modules
 
-    command: npm run dev
+    command: node dist/server.js
 
   frontend:
     build:
