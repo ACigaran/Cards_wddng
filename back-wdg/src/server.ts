@@ -11,6 +11,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const origin = process.env.FRONT_URL;
+
 await server.register(cors, {
     origin: origin,
     methods: ["GET", "POST","PATCH", "PUT", "DELETE"]

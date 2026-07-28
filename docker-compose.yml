@@ -13,6 +13,8 @@ services:
       - postgres_data:/var/lib/postgresql/data
       - ./db:/docker-entrypoint-initdb.d
 
+    restart: unless-stopped
+
   backend:
     build:
       context: ./back-wdg
@@ -26,14 +28,16 @@ services:
     env_file:
       - .env
       
-    expose:
-      - "${BACK_PORT}"
+    ports:
+      - "${BACK_PORT}:${BACK_PORT}"
 
     volumes:
       - ./back-wdg:/app
       - /app/node_modules
 
-    command: node dist/server.js
+    command: npx tsx src/server.ts
+
+    restart: unless-stopped
 
   frontend:
     build:
@@ -56,6 +60,8 @@ services:
       - /app/node_modules
 
     command: npm start
+
+    restart: unless-stopped
 
 volumes:
   postgres_data:
